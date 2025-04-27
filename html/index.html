@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="admin-panel" class="hidden">
+        <div class="glass-container">
+            <div class="panel-header">
+                <div class="header-content">
+                    <i class="fas fa-headset"></i>
+                    <h1 id="panel-title">Support Panel</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="close-panel" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="panel-tabs">
+                <button class="tab-btn active" data-tab="tickets">
+                    <i class="fas fa-ticket-alt"></i> <span class="tab-text">Tickets</span>
+                </button>
+                <button class="tab-btn" data-tab="settings">
+                    <i class="fas fa-cog"></i> <span class="tab-text">Settings</span>
+                </button>
+            </div>
+            <div id="tickets-tab" class="tab-content active">
+                <div class="tickets-container">
+                    <div class="no-tickets">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>No support tickets</span>
+                    </div>
+                    <!-- Tickets werden dynamisch hier eingefügt -->
+                </div>
+            </div>
+            <div id="settings-tab" class="tab-content">
+                <div class="settings-container">
+                    <div class="settings-section">
+                        <h2 class="settings-title">Notifications</h2>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="sound-enabled">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Enable sound</span>
+                        </div>
+                        <div class="setting-item">
+                            <label for="sound-volume" class="setting-label">Volume</label>
+                            <input type="range" id="sound-volume" min="0" max="100" value="50">
+                            <span class="volume-value">50%</span>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h2 class="settings-title">Appearance</h2>
+                        <div class="setting-item">
+                            <span class="setting-label">Accent color</span>
+                            <div class="color-picker">
+                                <button class="color-option active" data-color="#2196f3" style="background-color: #2196f3;"></button>
+                                <button class="color-option" data-color="#9c27b0" style="background-color: #9c27b0;"></button>
+                                <button class="color-option" data-color="#4CAF50" style="background-color: #4CAF50;"></button>
+                                <button class="color-option" data-color="#ff9800" style="background-color: #ff9800;"></button>
+                                <button class="color-option" data-color="#e91e63" style="background-color: #e91e63;"></button>
+                                <div class="custom-color-picker">
+                                    <input type="color" id="custom-color" value="#2196f3">
+                                    <label for="custom-color" class="custom-color-btn">
+                                        <i class="fas fa-plus"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h2 class="settings-title">Ticket Management</h2>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="auto-accept" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Auto accept when teleporting</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="auto-waypoint" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Auto set waypoint on accept</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="switch">
+                                <input type="checkbox" id="confirm-delete" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Confirm deletion</span>
+                        </div>
+                    </div>
+                    <div class="credits">
+                        <span>© </span><span class="creator">0le</span><span class="version">v1.0.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirmation Dialog -->
+    <div id="confirm-dialog" class="dialog-overlay hidden">
+        <div class="dialog-container">
+            <div class="dialog-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h2>Confirmation</h2>
+            </div>
+            <div class="dialog-content">
+                Do you really want to delete this ticket?
+            </div>
+            <div class="dialog-actions">
+                <button class="btn btn-secondary" id="dialog-cancel">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn btn-danger" id="dialog-confirm">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

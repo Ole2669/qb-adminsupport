@@ -1,5 +1,5 @@
 # QB Admin Support System
-[qb-adminsupport](https://github.com/user-attachments/assets/3691e17e-0291-4c23-926b-cdd59c54924c)
+![qb-adminsupport](https://github.com/user-attachments/assets/3691e17e-0291-4c23-926b-cdd59c54924c)
 ![Settings](https://github.com/user-attachments/assets/d46bd991-9cbd-4b90-aeb3-d5f218b45129)
 ![Ticketpanel](https://github.com/user-attachments/assets/9743c8bb-3094-4fc3-bc49-70b8016c60ab)
 
@@ -18,7 +18,7 @@
 - Customizable chat messages and notifications
 - Individual admin notification toggles
 - Admin visibility settings (show/hide admin names in notifications)
-- Smart notification system to prevent duplicate messages!
+- Smart notification system to prevent duplicate messages
 - Configurable admin status display
 
 

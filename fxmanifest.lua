@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author 'Your Server Name'
+author '0le'
 description 'Admin Support System with Ticket Management'
 version '1.0.0'
 

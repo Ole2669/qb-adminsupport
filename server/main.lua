@@ -3,6 +3,7 @@ local activeTickets = {}
 local noAdminMode = {}
 local playerCooldowns = {}
 local playerTicketCount = {}
+local discordMessages = {} -- Store Discord message IDs for updates
 
 -- Initialize Locales table
 Locales = {}
@@ -132,6 +133,71 @@ local function SendConfiguredNotification(player, notificationType, adminName, d
     end
 end
 
+-- Send Discord webhook notification
+-- # Reason: This function sends ticket information to a Discord channel via webhook
+local function SendDiscordWebhook(type, data)
+    if not Config.Discord.enabled or not Config.Discord.webhook or Config.Discord.webhook == "" then
+        return
+    end
+
+    -- Only send notifications for new tickets
+    if type ~= "ticketCreated" then
+        return
+    end
+    
+    -- Get translations directly from the locale system
+    local titleText = _L('discord_title')
+    local idText = _L('discord_id') .. " `#%s`\n"
+    local playerText = _L('discord_player') .. " `%s` (ID: %d)\n"
+    local messageText = _L('discord_message') .. "\n```%s```\n"
+    local createdText = _L('discord_created') .. " <t:%d:R>"
+    
+    -- Build the description with clear sections and minimal formatting
+    local description = string.format(idText, data.id)
+    description = description .. string.format(playerText, data.name, data.player)
+    description = description .. string.format(messageText, data.message)
+    
+    if Config.Discord.design.includeTimestamp then
+        description = description .. string.format(createdText, data.timestamp)
+    end
+    
+    -- Create the embed
+    local embed = {
+        {
+            title = titleText,
+            color = Config.Discord.color, -- Use the single color setting
+            description = description,
+            footer = {
+                text = Config.Discord.footer
+            },
+            thumbnail = Config.Discord.thumbnailUrl ~= "" and { url = Config.Discord.thumbnailUrl } or nil,
+            timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+        }
+    }
+    
+    local discordData = {
+        username = Config.Discord.botName,
+        avatar_url = Config.Discord.avatarUrl ~= "" and Config.Discord.avatarUrl or nil,
+        embeds = embed
+    }
+    
+    -- Simple function to handle Discord response
+    local function HandleDiscordResponse(err, text, headers)
+        if err ~= 200 and err ~= 204 then
+            print("^1Discord webhook error: " .. err .. "^7")
+        end
+    end
+    
+    -- Always use POST since we're only sending new messages
+    PerformHttpRequest(
+        Config.Discord.webhook, 
+        HandleDiscordResponse, 
+        'POST', 
+        json.encode(discordData), 
+        { ['Content-Type'] = 'application/json' }
+    )
+end
+
 -- Command to create a support ticket
 QBCore.Commands.Add(Config.SupportCommand, _L('cmd_support_help'), {{name = 'message', help = _L('cmd_support_arg')}}, true, function(source, args)
     local src = source
@@ -173,6 +239,9 @@ QBCore.Commands.Add(Config.SupportCommand, _L('cmd_support_help'), {{name = 'mes
         status = 'pending',
         assignedTo = nil
     }
+
+    -- Send Discord webhook notification for ticket creation
+    SendDiscordWebhook("ticketCreated", activeTickets[ticketId])
 
     -- Set cooldown
     playerCooldowns[src] = os.time()
@@ -251,6 +320,9 @@ RegisterNetEvent('qb-adminsupport:server:HandleTicket', function(ticketId, actio
         local adminName = GetPlayerName(src)
         ticket.assignedTo = adminName
         
+        -- Send Discord webhook notification for ticket acceptance
+        SendDiscordWebhook("ticketAccepted", ticket)
+        
         -- Send styled accept notification
         TriggerClientEvent('chat:addMessage', ticket.player, {
             template = '<div style="padding: 0.5vw; margin: 0.5vw; background-color: rgba(0, 128, 255, 0.15); border-radius: 3px;">' ..
@@ -272,8 +344,16 @@ RegisterNetEvent('qb-adminsupport:server:HandleTicket', function(ticketId, actio
 
     elseif action == 'unassign' then
         local previousAdmin = ticket.assignedTo
+        
+        -- Create a copy of the ticket data with the previous admin for Discord webhook
+        local ticketData = table.copy(ticket)
+        ticketData.previousAdmin = previousAdmin
+        
         ticket.status = 'pending'
         ticket.assignedTo = nil
+        
+        -- Send Discord webhook notification for ticket unassignment
+        SendDiscordWebhook("ticketUnassigned", ticketData)
         
         -- Send styled unassign notification
         TriggerClientEvent('chat:addMessage', ticket.player, {
@@ -298,6 +378,14 @@ RegisterNetEvent('qb-adminsupport:server:HandleTicket', function(ticketId, actio
         if activeTickets[ticketId] then
             local playerSrc = activeTickets[ticketId].player
             local adminName = GetPlayerName(src)
+            
+            -- Create a copy of the ticket data with the closing admin for Discord webhook
+            local ticketData = table.copy(activeTickets[ticketId])
+            ticketData.closedBy = adminName
+            
+            -- Send Discord webhook notification for ticket closing
+            SendDiscordWebhook("ticketClosed", ticketData)
+            
             playerCooldowns[playerSrc] = nil
             
             -- Send styled close notification
@@ -365,4 +453,20 @@ AddEventHandler('playerDropped', function()
     -- Clear cooldown
     playerCooldowns[src] = nil
     noAdminMode[src] = nil
-end) 
+end)
+
+-- Helper function to create a deep copy of a table
+function table.copy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[table.copy(orig_key)] = table.copy(orig_value)
+        end
+        setmetatable(copy, table.copy(getmetatable(orig)))
+    else
+        copy = orig
+    end
+    return copy
+end 

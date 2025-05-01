@@ -39,6 +39,11 @@ Locales['en'] = {
     ['auto_accept_tp'] = 'Auto accept when teleporting',
     ['auto_waypoint'] = 'Auto set waypoint on accept',
     ['confirm_delete'] = 'Confirm deletion',
+    ['discord_settings'] = 'Discord Settings',
+    ['discord_webhook'] = 'Discord Webhook URL',
+    ['discord_enable'] = 'Enable Discord notifications',
+    ['discord_bot_name'] = 'Bot name',
+    ['discord_saved'] = 'Discord settings saved',
     
     -- Dialogs
     ['confirmation'] = 'Confirmation',
@@ -47,7 +52,9 @@ Locales['en'] = {
     
     -- Notifications
     ['ticket_accepted'] = 'Your ticket has been accepted by %s!',
-    ['ticket_closed'] = 'Your support ticket has been closed',
+    ['ticket_accepted_no_admin'] = 'Your ticket has been accepted!',
+    ['ticket_closed'] = 'Your support ticket has been closed by %s',
+    ['ticket_closed_no_admin'] = 'Your support ticket has been closed',
     ['ticket_unassigned'] = 'Your ticket has been returned to the queue',
     ['waypoint_set'] = 'Waypoint set to ticket location',
     ['cooldown'] = 'You need to wait %s before creating a new ticket',
@@ -71,6 +78,7 @@ Locales['en'] = {
     ['chat_please_wait'] = 'An admin will handle your request',
     ['chat_unassigned'] = 'Ticket unassigned',
     ['chat_other_admin'] = 'Another admin will handle your request',
+    ['chat_ticket_closed'] = 'Ticket closed',
     
     -- Errors
     ['error_no_message'] = 'Please provide a message for your ticket!',
@@ -93,6 +101,19 @@ Locales['en'] = {
     ['ui_open'] = 'Open',
     ['ui_closed'] = 'Closed',
     ['ui_no_tickets'] = 'No active tickets available',
+    
+    -- Discord Webhook
+    ['discord_new_ticket'] = 'New Support Ticket',
+    ['discord_ticket_accepted'] = 'Ticket Accepted',
+    ['discord_ticket_unassigned'] = 'Ticket Unassigned',
+    ['discord_ticket_closed'] = 'Ticket Closed',
+    
+    -- Discord Message Fields
+    ['discord_title'] = 'New Support Ticket',
+    ['discord_id'] = 'ID:',
+    ['discord_player'] = 'Player:',
+    ['discord_message'] = 'Message:',
+    ['discord_created'] = 'Created:',
 
     -- Admin Mode
     ['noadmin_enabled'] = 'Admin mode disabled - You will no longer receive support notifications',

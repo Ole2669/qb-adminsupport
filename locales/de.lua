@@ -39,6 +39,11 @@ Locales['de'] = {
     ['auto_accept_tp'] = 'Automatisch annehmen wenn teleportiert',
     ['auto_waypoint'] = 'Automatisch Wegpunkt setzen bei Annahme',
     ['confirm_delete'] = 'Löschen bestätigen',
+    ['discord_settings'] = 'Discord Einstellungen',
+    ['discord_webhook'] = 'Discord Webhook URL',
+    ['discord_enable'] = 'Discord Benachrichtigungen aktivieren',
+    ['discord_bot_name'] = 'Bot-Name',
+    ['discord_saved'] = 'Discord Einstellungen gespeichert',
     
     -- Dialogs
     ['confirmation'] = 'Bestätigung',
@@ -96,5 +101,18 @@ Locales['de'] = {
     ['ui_close_ticket'] = 'Ticket schließen',
     ['ui_open'] = 'Offen',
     ['ui_closed'] = 'Geschlossen',
-    ['ui_no_tickets'] = 'Keine aktiven Tickets vorhanden'
+    ['ui_no_tickets'] = 'Keine aktiven Tickets vorhanden',
+    
+    -- Discord Webhook
+    ['discord_new_ticket'] = 'Neues Support-Ticket',
+    ['discord_ticket_accepted'] = 'Ticket angenommen',
+    ['discord_ticket_unassigned'] = 'Ticket zurückgestellt',
+    ['discord_ticket_closed'] = 'Ticket geschlossen',
+    
+    -- Discord Message Fields
+    ['discord_title'] = 'Neues Support-Ticket',
+    ['discord_id'] = 'ID:',
+    ['discord_player'] = 'Spieler:',
+    ['discord_message'] = 'Nachricht:',
+    ['discord_created'] = 'Erstellt:',
 } 

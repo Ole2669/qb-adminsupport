@@ -11,6 +11,20 @@ Config.AdminPanelCommand = "ap" -- Command to open the admin panel
 Config.NoAdminCommand = "noadmin" -- Command to toggle admin mode
 Config.SupportCommand = "support" -- Command to create a support ticket
 
+-- Discord Webhook Settings
+Config.Discord = {
+    enabled = false, -- Set to true to enable Discord webhook notifications
+    webhook = "", -- Discord webhook URL
+    botName = "Support", -- Name of the webhook bot
+    avatarUrl = "", -- Avatar URL for the webhook (optional)
+    footer = "QB Admin Support System", -- Footer text for embeds
+    color = 3447003, -- Blue color for Discord embeds (Discord default blue)
+    thumbnailUrl = "", -- Optional thumbnail URL for embeds
+    design = { -- Design-related settings
+        includeTimestamp = true -- Include timestamp in Discord embed
+    }
+}
+
 -- Notification Settings
 Config.NotificationSound = "incoming_support_msg.mp3" -- Sound file to play for notifications
 Config.NotificationDuration = 5000 -- Duration in ms to show notifications
@@ -18,7 +32,7 @@ Config.NotificationDuration = 5000 -- Duration in ms to show notifications
 -- Anti-Spam Settings
 Config.AntiSpam = {
     MaxTickets = 3, -- Maximum number of active tickets per player
-    Cooldown = 300, -- Time in seconds before a player can create another ticket
+    Cooldown = 0, -- Time in seconds before a player can create another ticket
 }
 
 -- Chat Settings

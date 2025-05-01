@@ -1,7 +1,4 @@
 # QB Admin Support System
-![qb-adminsupport](https://github.com/user-attachments/assets/3691e17e-0291-4c23-926b-cdd59c54924c)
-![Settings](https://github.com/user-attachments/assets/d46bd991-9cbd-4b90-aeb3-d5f218b45129)
-![Ticketpanel](https://github.com/user-attachments/assets/9743c8bb-3094-4fc3-bc49-70b8016c60ab)
 
 ## English
 
@@ -20,6 +17,7 @@
 - Admin visibility settings (show/hide admin names in notifications)
 - Smart notification system to prevent duplicate messages
 - Configurable admin status display
+- Discord webhook notifications for new tickets
 
 
 ### Commands
@@ -57,7 +55,35 @@
    add_ace group.admin command allow # Allows admin group to use admin commands
    ```
 4. Adjust settings in `config.lua` if needed
-5. Restart your server
+5. Configure Discord webhook in `config.lua` if you want to use Discord integration
+6. Restart your server
+
+### Discord Webhook Integration
+The resource includes Discord webhook notifications for new support tickets:
+
+1. Create a webhook in your Discord server (Server Settings > Integrations > Webhooks)
+2. Copy the webhook URL
+3. Edit `config.lua` and set:
+   ```lua
+   Config.Discord = {
+       enabled = true, -- Enable Discord integration
+       webhook = "YOUR_WEBHOOK_URL", -- Paste your webhook URL here
+       botName = "Admin Support", -- Name for the webhook bot
+       avatarUrl = "", -- Optional: URL for bot avatar
+       footer = "QB Admin Support System", -- Footer text for embeds
+       color = 3447003, -- Blue color for Discord embeds (Discord default blue)
+       thumbnailUrl = "", -- Optional thumbnail URL for embeds
+       design = { -- Design-related settings
+           includeTimestamp = true -- Include timestamp in Discord embed
+       }
+   }
+   ```
+
+4. The Discord notification includes:
+   - Ticket ID
+   - Player information
+   - Message content
+   - Relative timestamp showing when the ticket was created
 
 ### Dependencies
 - QBCore Framework
@@ -82,6 +108,7 @@
 - Admin-Sichtbarkeitseinstellungen (Admin-Namen in Benachrichtigungen anzeigen/verbergen)
 - Intelligentes Benachrichtigungssystem zur Vermeidung von Duplikaten
 - Konfigurierbare Admin-Status-Anzeige
+- Discord-Webhook-Benachrichtigungen für neue Tickets
 
 ### Befehle
 - `/support [Nachricht]` - Support-Ticket erstellen
@@ -118,7 +145,35 @@
    add_ace group.admin command allow # Erlaubt der Admin-Gruppe die Nutzung von Admin-Befehlen
    ```
 4. Bei Bedarf Einstellungen in `config.lua` anpassen
-5. Server neu starten
+5. Discord Webhook in `config.lua` konfigurieren, falls Discord-Integration gewünscht ist
+6. Server neu starten
+
+### Discord Webhook-Integration
+Die Ressource enthält Discord-Webhook-Benachrichtigungen für neue Support-Tickets:
+
+1. Erstelle einen Webhook in deinem Discord-Server (Server-Einstellungen > Integrationen > Webhooks)
+2. Kopiere die Webhook-URL
+3. Bearbeite `config.lua` und setze:
+   ```lua
+   Config.Discord = {
+       enabled = true, -- Discord-Integration aktivieren
+       webhook = "DEINE_WEBHOOK_URL", -- Füge deine Webhook-URL hier ein
+       botName = "Admin Support", -- Name für den Webhook-Bot
+       avatarUrl = "", -- Optional: URL für Bot-Avatar
+       footer = "QB Admin Support System", -- Fußzeilentext für Embeds
+       color = 3447003, -- Blaue Farbe für Discord embeds (Discord default blue)
+       thumbnailUrl = "", -- Optionale Thumbnail-URL für embeds
+       design = { -- Design-bezogene Einstellungen
+           includeTimestamp = true -- Zeitstempel in Discord embed einbeziehen
+       }
+   }
+   ```
+
+4. Die Discord-Benachrichtigung enthält:
+   - Ticket-ID
+   - Spielerinformationen
+   - Nachrichteninhalt
+   - Relativer Zeitstempel, der zeigt, wann das Ticket erstellt wurde
 
 ### Abhängigkeiten
 - QBCore Framework
@@ -136,6 +191,11 @@ You can modify the following settings in `config.lua`:
 - Admin visibility options
 - Sound settings
 - Chat message formatting
+- Discord webhook settings:
+  - Bot name and avatar
+  - Send notifications only for new tickets
+  - Design settings (timestamp display)
+  - Color settings
 
 ## Localization
 
@@ -153,20 +213,3 @@ To add a new language:
 ## License and Credits
 
 This resource was created by 0le and is released under the MIT License. See the [LICENSE.md](LICENSE.md) file for the full license text.
-
-### Credits
-- Original Creator: 0le
-- License: MIT
-- Year: 2024
-
-### Usage Rights
-You are free to:
-- Use this resource on your server
-- Modify the code to suit your needs
-- Redistribute the modified version
-- Use it commercially
-- Sublicense it
-
-The only requirement is to include the original copyright notice and MIT license in any substantial portions of the software.
-
-For more details, please refer to the [LICENSE.md](LICENSE.md) file in this repository.
